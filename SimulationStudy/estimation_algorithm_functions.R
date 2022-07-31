@@ -49,7 +49,7 @@ SolveL = function(theta,Z,d1,d2,X,W,cop,dist){
   
   for (i in 3:m){
     csum = sum(L[1:(i-1)])
-    psi = CompC(theta,T1[i],X,W,csum,cop,dist)         # used to compute psi value in Section 4 of the paper
+    psi = CompC(theta,T1[i],X,W,csum,cop,dist)                # used to compute psi value in Section 4 of the paper
     L[i] <- sum(Z == T1[i])/sum((Z>=T1[i])*exp(psi))
   }
   res <- list(lambda = L,cumhaz = cumsum(L), times = T1)
@@ -230,6 +230,7 @@ get_surv_prob <- function(fit, times) {
                       # X,W =  data matrices
                       # dist = distribution of dependent censoring, C
 
+
 PseudoL = function(theta,Z,d1,d2,X,W,lhat,cumL,cop,dist){
   
   k = dim(X)[2]
@@ -239,7 +240,7 @@ PseudoL = function(theta,Z,d1,d2,X,W,lhat,cumL,cop,dist){
   nu = theta[(l+k+1)]
   gm = theta[(l+k+2)]
   y = log(Z)
-  
+
   # distribution of T -- Cox PH
   
   g1 = lhat*exp(X%*%beta)*exp(-cumL*exp(X%*%beta))
@@ -248,7 +249,7 @@ PseudoL = function(theta,Z,d1,d2,X,W,lhat,cumL,cop,dist){
   # dist of C
   
   if (dist == "wb"){    # Weibull
-    g2 = 1/nu*exp((y-W%*%eta)/nu)*exp(-exp((y-W%*%eta)/nu))      #log-time scale
+    g2 = 1/nu*exp((y-W%*%eta)/nu)*exp(-exp((y-W%*%eta)/nu))      # log-time scale
     G2 = 1-exp(-exp((y-W%*%eta)/nu))
   }
   if (dist == "lgn"){   # Lognormal
@@ -264,8 +265,8 @@ PseudoL = function(theta,Z,d1,d2,X,W,lhat,cumL,cop,dist){
   }
   
   # Joint distribution
-  # avoid numerical issues
-  
+  # avoid NA
+
   g1[is.na(g1)] = 1e-20
   g2[is.na(g2)] = 1e-20
   g1[is.nan(g1)] = 1e-20
@@ -274,27 +275,25 @@ PseudoL = function(theta,Z,d1,d2,X,W,lhat,cumL,cop,dist){
   G2[is.na(G2)] = 1e-10
   G1[is.nan(G1)] = 1e-10
   G2[is.nan(G2)] = 1e-10
-  g1 = pmax(g1,1e-30)
-  g2 = pmax(g2,1e-30)
   g1[!is.finite(g1)] = 0
   g2[!is.finite(g2)] = 0
-  
+
   G1 = pmax(G1,1e-10)
-  G1 = pmin(G1,0.999999)
+  G1 = pmin(G1,0.99999999)
   G2 = pmax(G2,1e-10)
-  G2 = pmin(G2,0.999999)
+  G2 = pmin(G2,0.99999999)
   
   PD = cbind(G1,G2)
   
-  if (cop == 1)                                          # Clayton copula
+  if (cop == 1)                                         # Clayton copula
   {  
     clay.cop = claytonCopula(gm, dim = 2)
     cp1 = (G1^(-gm)+G2^(-gm)-1)^(-1/gm-1)*G1^(-gm-1)
     cp2 = (G1^(-gm)+G2^(-gm)-1)^(-1/gm-1)*G2^(-gm-1)
-    z6 =  1-G1-G2+pCopula(PD,clay.cop)                   # Joint survival function       
+    z6 =  1-G1-G2+pCopula(PD,clay.cop)                  # joint survival function       
     z6 =   pmax(z6,1e-10)
   }
-  if (cop == 2)                                          # Frank copula
+  if (cop == 2)                                         # Frank copula
   {
     frank.cop = frankCopula(gm, dim = 2)
     cp1 = (exp(- gm*G1)*(exp(- gm*G2)-1))/(exp(-gm)-1 + (exp(-gm*G1)-1)*(exp(-gm*G2)-1))
@@ -308,8 +307,6 @@ PseudoL = function(theta,Z,d1,d2,X,W,lhat,cumL,cop,dist){
     gumb.cop = gumbelCopula(gm, dim = 2)
     cp1 = pCopula(PD,gumb.cop)*((-log(G1))^gm+(-log(G2))^gm)^(-1+1/gm)*(-log(G1))^(gm-1)/G1
     cp2 = pCopula(PD,gumb.cop)*((-log(G1))^gm+(-log(G2))^gm)^(-1+1/gm)*(-log(G2))^(gm-1)/G2
-    cp1[is.na(cp1)] <- 0.00001
-    cp2[is.na(cp2)] <- 0.00001
     
     z6 =  1-G1-G2+pCopula(PD,gumb.cop)               
     z6 =   pmax(z6,1e-10)
@@ -321,17 +318,13 @@ PseudoL = function(theta,Z,d1,d2,X,W,lhat,cumL,cop,dist){
     p1 = qnorm(G1)
     p2 = qnorm(G2)
     c2 = cbind(p1,p2)
-    z6 =  1-G1-G2+pbivnorm(c2,rho = gm)       # contribution to the likelihood from A
+    z6 =  1-G1-G2+pbivnorm(c2,rho = gm)          # contribution to the likelihood from A
     z6 =   pmax(z6,1e-10)
   }
   cp1[is.na(cp1)] = 1e-20
   cp2[is.na(cp2)] = 1e-20
   cp1[is.nan(cp1)] = 1e-20
   cp2[is.nan(cp2)] = 1e-20
-  cp1 = pmin(cp1,0.999999)
-  cp2 = pmin(cp2,0.999999)
-  cp1 = pmax(cp1,1e-20)
-  cp2 = pmax(cp2,1e-20)
   cp1[!is.finite(cp1)] = 0
   cp2[!is.finite(cp2)] = 0
   d3 =  (1-d1-d2)             # Censoring
@@ -341,6 +334,7 @@ PseudoL = function(theta,Z,d1,d2,X,W,lhat,cumL,cop,dist){
   Logn <- -sum(d1 * log(pmax(term1, 1e-10)) + d2 * log(pmax(term2, 1e-10)) + d3*log(z6))
   return(Logn)
 }
+
 
 
 # NEIN - main function in implementing the proposed estimation algorithm
