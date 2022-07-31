@@ -11,7 +11,7 @@
 
 - [ ] This is a checkbox 
 
-To check a checkbox, replace [ ] by [x], as follows: 
+To check a checkbox, replace [ ] by [x],
 
 - [x] This is a checked checkbox 
 
