@@ -100,7 +100,7 @@ Provide a short (< 100 words), high-level description of the code. If necessary,
 
 ## Description
 
-Simulations in the manuscript were conducted using R version 3.6.0. All of the R scripts used in the paper are available in a public repository on GitHub [url blinded].  The MIT license applies to all code, and no permissions are required to access the code. 
+Simulations in the manuscript were conducted using R version 3.6.0. All of the R scripts used in the paper are available in a public repository on GitHub [url private].  The MIT license applies to all code, and no permissions are required to access the code. 
 
 To run the code provided, the following $R$ libraries should be installed. The numbers in the parentheses indicate the version of the packages used when performing the analysis presented in the manuscript. **pbivnorm (0.6.0),  survival (3.2-13), copula (1.0-1)**.
 
