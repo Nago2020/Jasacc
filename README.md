@@ -1,9 +1,9 @@
----
-title: "Copula based Cox proportional hazards models for dependent censoring"
-output:
+
+# Copula based Cox proportional hazards models for dependent censoring
+<!-- output:
   pdf_document: default
   html_document: default
----
+-->
 <!--HOW TO COMPLETE THIS FORM:-->
 
 <!--
@@ -43,7 +43,7 @@ If box above is checked and if no simulated/synthetic data files are provided by
 
 ## Abstract
 
-A follicular cell lymphoma data set given in the book of Pintilie (2006) is used to illustrate the performance of the proposed semiparametric copula model. The data given in the book consist of 541 patients with early disease stage (I or II) and treated with radiation alone (RT) or with radiation and chemotherapy (CMT). The endpoints of interest are what comes first: relapse of the disease or death in remission. The data are freely available in the $R$ package \texttt{randomForestSRC}. We also studied the performance of the proposed method using extensive simulations.
+A follicular cell lymphoma data set given in the book of Pintilie (2006) is used to illustrate the performance of the proposed semiparametric copula model. The data given in the book consist of 541 patients with early disease stage (I or II) and treated with radiation alone (RT) or with radiation and chemotherapy (CMT). The endpoints of interest are what comes first: relapse of the disease or death in remission. The data are freely available in the $R$ package **randomForestSRC**. We also studied the performance of the proposed method using extensive simulations.
 
 
 <!--
@@ -82,7 +82,7 @@ Please discuss the lack of publicly available data. For example:
 
 ## Description
 
-The data are available in the $R$ package \texttt{randomForestSRC} by data name \texttt{follic}. Hence, all the descriptions about the data can be obtained by typing \texttt{?follic} in $R$. 
+The data are available in the $R$ package **randomForestSRC** by data name **follic**. Hence, all the descriptions about the data can be obtained by typing **?follic** in $R$. 
 
 <!-- 
 OPTIONAL: Provide any additional details that would be helpful in understanding the data. If relevant, please provide unique identifier/DOI/version information and/or license/terms of use.
@@ -102,7 +102,7 @@ Provide a short (< 100 words), high-level description of the code. If necessary,
 
 Simulations in the manuscript were conducted using R version 3.6.0. All of the R scripts used in the paper are available in a public repository on GitHub [url blinded].  The MIT license applies to all code, and no permissions are required to access the code. 
 
-To run the code provided, the following $R$ libraries should be installed. The numbers in the parentheses indicate the version of the packages used when performing the analysis presented in the manuscript. \texttt{pbivnorm (0.6.0),  survival (3.2-13), copula (1.0-1). }
+To run the code provided, the following $R$ libraries should be installed. The numbers in the parentheses indicate the version of the packages used when performing the analysis presented in the manuscript. **pbivnorm (0.6.0),  survival (3.2-13), copula (1.0-1)**.
 
 
 <!--
@@ -183,10 +183,10 @@ OPTIONAL: By default, submitted code will be published on the JASA GitHub reposi
 The materials provided should provide a straightforward way for reviewers and readers to reproduce analyses with as few steps as possible. 
 -->
 
-All tables and figures in the paper can be reproduced using the $R$ code in the GitHub repository. There are two subfolders in this repository:  \texttt{SimulationStudy} and \texttt{DataApplication}. In the subfolder \texttt{SimulationStudy}, all workflow information to reproduce tables and figures in the simulation study is contained in the 'Master_reproducibility_simulations.R' script. Running this script on a desktop or laptop is very time-consuming, even after parallel processing is done via \texttt{foreach()}. 
+All tables and figures in the paper can be reproduced using the $R$ code provided in the Github repository: https://github.com/Nago2020/Jasacc. There are two subfolders in this repository: **SimulationStudy** and **DataApplication**. In the subfolder **SimulationStudy**, all workflow information to reproduce tables and figures in the simulation study is contained in the **Master_reproducibility_simulations.R** script. Running this script on a desktop or laptop is very time-consuming, even after parallel processing is done via **foreach()**. 
 
 
-The workflow information is provided in the 'Real_data_analysis_results.R' script in the \texttt{DataApplication} subfolder for reproducing tables and figures in the data application section. Real_data_analysis_results.R requires approximately 5-6 hours to reproduce the results in Tables 4-5 and Figure 5 and the goodness-of-fit test results in Table 8.   
+The workflow information is provided in the **Real_data_analysis_results.R** script in the **DataApplication** subfolder for reproducing tables and figures in the data application section. **Real_data_analysis_results.R** requires approximately 5-6 hours to reproduce the results in Tables 4-5 and Figure 5 and the goodness-of-fit test results in Table 8.   
 
 
 <!--
