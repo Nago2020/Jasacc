@@ -465,8 +465,8 @@ longfrm = Longfun(time,T1,l1,L1)
 cumW = longfrm[,2]
 
 
-plot(time,cumW, type = "l", cex = 1.5, ylim = c(0,2.3), xlab = "Time (in years)",
-          ylab = "Cumulative hazard")
+plot(time,cumW, type = "l", ylim = c(0,2.3), lwd = 2,xlab = "Time (in years)",
+          ylab = "Cumulative hazard", cex = 3, cex.lab=1.5,cex.axis = 1.5)
 
 
 # Cox lognormal
@@ -477,8 +477,7 @@ T1 = outputL$T1
 longfrm = Longfun(time,T1,l1,L1)
 cumL = longfrm[,2]
 
-lines(Z,cumL, lty = 2, type = "l")
-lines(time,cumL, lty = 2, cex = 1.5)
+lines(time,cumL, lty = 2,lwd = 2, cex = 3,cex.lab = 1.5, cex.axis = 1.5)
 
 # Independent copula
 
@@ -488,7 +487,7 @@ T1 = outputI$T1
 longfrm = Longfun(time,T1,l1,L1)
 cumLI = longfrm[,2]
 
-lines(time,cumLI, lty = 3, cex = 1.5,type = "l")
+lines(time,cumLI, lty = 3, lwd = 2, cex = 3)
 
 
 stopCluster(clust)
